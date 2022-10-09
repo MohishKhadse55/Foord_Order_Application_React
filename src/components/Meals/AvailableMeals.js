@@ -28,12 +28,11 @@ const DUMMY_MEALS = [
     description: 'Healthy...and green...',
     price: 18.99,
   },
-]; 
+];
 
 function AvailableMeals(props) {
   const meallist = DUMMY_MEALS.map((meal) => (
     <MealItems
-      {/*  here insteal of passing each value as seperately you can pass the meal directly and and can get the attributes using props.meal.name */}
       key={meal.id}
       name={meal.name}
       description={meal.description}
