@@ -1,37 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useEffect } from 'react';
 import classes from './AvailabelMeals.module.css';
 import Card from '../UI/Card';
 import MealItems from './MealItems/MealItems';
 
-const DUMMY_MEALS = [
-  {
-    id: 'm1',
-    name: 'Sushi',
-    description: 'Finest fish and veggies',
-    price: 22.99,
-  },
-  {
-    id: 'm2',
-    name: 'Schnitzel',
-    description: 'A german specialty!',
-    price: 16.5,
-  },
-  {
-    id: 'm3',
-    name: 'Barbecue Burger',
-    description: 'American, raw, meaty',
-    price: 12.99,
-  },
-  {
-    id: 'm4',
-    name: 'Green Bowl',
-    description: 'Healthy...and green...',
-    price: 18.99,
-  },
-];
-
 function AvailableMeals(props) {
-  const meallist = DUMMY_MEALS.map((meal) => (
+  const [meals, setMeals] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    console.log('fetching meals ...');
+    const fetchMeals = async () => {
+      const response = await fetch(
+        'https://react-5614b-default-rtdb.firebaseio.com/melas.json'
+      );
+      const responseData = await response.json();
+      console.log(responseData);
+      const loadedMeals = [];
+      for (const key in responseData) {
+        loadedMeals.push({
+          id: key,
+          name: responseData[key].name,
+          description: responseData[key].description,
+          price: responseData[key].price,
+        });
+      }
+      setMeals(loadedMeals);
+    };
+    fetchMeals();
+  }, []);
+
+  const meallist = meals.map((meal) => (
     <MealItems
       key={meal.id}
       id={meal.id}

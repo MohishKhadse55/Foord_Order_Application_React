@@ -157,6 +157,33 @@
 
 ## image.png
 
+--- 
+
+---
+
+### <h1 align="center"> Look behind the scene </h1>
+
+## How does React really work 
+- Rerendering the ract component does not meant re rendering the real dom 
+- changes to the real dom is only made for differences between evaluations
+- `virtual dom diffingl`
+  - react verify the difference between the previous evaluation result and current revaluation result and on that basis update the 
+  virtual dom 
+- when parent component re evaluated its child component too are re evaluated this might caue the performance issue so to avoid that we 
+- This extra re- evaluation can be avoided by the appling the method `React.memo(component)` 
+  - This will tell react to compare the value of the current passed props to the previous props and if those are changed then re-evaluate the component 
+  - But this thing come at the cost  cause react has to store the previous props values and compare the props values
+- `useCallback` hook is used to store the function across the component execution 
+  - due to this one and the same object is stored in a one and th same place in the memory
+  - ```jsxconst toogleParagraphHandler = useCallback(()=>{
+    if (allowToogle){
+        setShowParagraph((prevSAHowpragraph)=>!prevShowParagraph)}}.[])
+    ```
+  - There are some cases where we actuly want to recreate a function because values in that function are coming from outside of that functino but as we store the 
+  that function so that value is also get stored due to `closures` so we need to specify which variable which is going to be change 
+  - here that variable is allowToogle  **so we sotre it as a dependencies to `useCallback`**
+
+
 # IMP
 
 -   Custom components cannot be use as a wrapper to the other type of contenet but it work for the build in html components
@@ -168,3 +195,4 @@
 - You should have the store for to manage the logic of the component cause...
   - Suppose you have large components in the app.js then it becomes too much to handle that data on app.js so by having the 
   store wich manage your components logic is better
+  - when parent component re evaluated its child component too are re evaluated
