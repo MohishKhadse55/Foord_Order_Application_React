@@ -94,5 +94,5 @@ const Checkout = (props) => {
     </form>
   );
 };
-
+// exporting the content
 export default Checkout;
